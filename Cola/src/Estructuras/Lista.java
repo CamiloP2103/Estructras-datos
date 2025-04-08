@@ -17,9 +17,9 @@ import java.util.Iterator;
  * 
  */
 public class Lista<Item> implements Iterable<Item> {
-    private Item[] elementos;
-    private int cantidad;
-    private int capacidad;
+    private Item[] a;
+    private int count;
+    private int tamano;
 
     /**
      * Constructor que inicializa la lista con capacidad inicial.
@@ -30,9 +30,9 @@ public class Lista<Item> implements Iterable<Item> {
             System.out.println("Advertencia: Capacidad invalida");
             capacidadInicial = 0;
         }
-        this.capacidad = capacidadInicial;
-        this.elementos = (Item[]) new Object[capacidad];
-        this.cantidad = 0;
+        this.tamano = capacidadInicial;
+        this.a = (Item[]) new Object[tamano];
+        this.count = 0;
     }
 
     /**
@@ -41,11 +41,11 @@ public class Lista<Item> implements Iterable<Item> {
      */
     private void redimensionar(int nuevaCapacidad) {
         Item[] nuevoArreglo = (Item[]) new Object[nuevaCapacidad];
-        for (int i = 0; i < cantidad; i++) {
-            nuevoArreglo[i] = elementos[i];
+        for (int i = 0; i < count; i++) {
+            nuevoArreglo[i] = a[i];
         }
-        elementos = nuevoArreglo;
-        capacidad = nuevaCapacidad;
+        a = nuevoArreglo;
+        tamano = nuevaCapacidad;
     }
 
     /**
@@ -53,10 +53,10 @@ public class Lista<Item> implements Iterable<Item> {
      * @param elemento Elemento a agregar.
      */
     public void agregarAlFinal(Item elemento) {
-        if (cantidad == capacidad) {
-            redimensionar(capacidad * 2);
+        if (count == tamano) {
+            redimensionar(tamano * 2);
         }
-        elementos[cantidad++] = elemento;
+        a[count++] = elemento;
     }
 
     /**
@@ -64,16 +64,16 @@ public class Lista<Item> implements Iterable<Item> {
      * @param elemento Elemento a agregar.
      */
     public void agregarAlInicio(Item elemento) {
-        if (cantidad == capacidad) {
-            redimensionar(capacidad * 2);
+        if (count == tamano) {
+            redimensionar(tamano * 2);
         }
         
-        for (int i = cantidad; i > 0; i--) {
-            elementos[i] = elementos[i - 1];
+        for (int i = count; i > 0; i--) {
+            a[i] = a[i - 1];
         }
         
-        elementos[0] = elemento;
-        cantidad++;
+        a[0] = elemento;
+        count++;
     }
 
     /**
@@ -83,23 +83,23 @@ public class Lista<Item> implements Iterable<Item> {
      * @return true si la inserción fue exitosa, false si la posición es inválida.
      */
     public boolean insertarEn(int posicion, Item elemento) {
-        if (posicion < 0 || posicion > cantidad) {
+        if (posicion < 0 || posicion > count) {
             System.out.println("Error: Posición inválida.");
             return false;
         }
         
-        if (cantidad == capacidad) {
-            redimensionar(capacidad * 2);
+        if (count == tamano) {
+            redimensionar(tamano * 2);
         }
         
-        if (posicion == cantidad) {
+        if (posicion == count) {
             agregarAlFinal(elemento);
         } else {
-            for (int i = cantidad; i > posicion; i--) {
-                elementos[i] = elementos[i - 1];
+            for (int i = count; i > posicion; i--) {
+                a[i] = a[i - 1];
             }
-            elementos[posicion] = elemento;
-            cantidad++;
+            a[posicion] = elemento;
+            count++;
         }
         return true;
     }
@@ -110,21 +110,21 @@ public class Lista<Item> implements Iterable<Item> {
      * @return Elemento eliminado o null si la posición es inválida.
      */
     public Item eliminarDe(int posicion) {
-        if (posicion < 0 || posicion >= cantidad) {
+        if (posicion < 0 || posicion >= count) {
             System.out.println("Error: Posición inválida.");
             return null;
         }
         
-        Item elemento = elementos[posicion];
+        Item elemento = a[posicion];
         
-        for (int i = posicion; i < cantidad - 1; i++) {
-            elementos[i] = elementos[i + 1];
+        for (int i = posicion; i < count - 1; i++) {
+            a[i] = a[i + 1];
         }
         
-        elementos[--cantidad] = null;
+        a[--count] = null;
         
-        if (cantidad > 0 && cantidad == capacidad / 4) {
-            redimensionar(capacidad / 2);
+        if (count > 0 && count == tamano / 4) {
+            redimensionar(tamano / 2);
         }
         
         return elemento;
@@ -136,11 +136,11 @@ public class Lista<Item> implements Iterable<Item> {
      * @return Elemento en la posición o null si es inválida.
      */
     public Item obtenerDe(int posicion) {
-        if (posicion < 0 || posicion >= cantidad) {
+        if (posicion < 0 || posicion >= count) {
             System.out.println("Error: Posicion invalida.");
             return null;
         }
-        return elementos[posicion];
+        return a[posicion];
     }
 
     /**
@@ -148,7 +148,7 @@ public class Lista<Item> implements Iterable<Item> {
      * @return true si la lista está vacía, false en caso contrario.
      */
     public boolean estaVacia() {
-        return cantidad == 0;
+        return count == 0;
     }
 
     /**
@@ -156,7 +156,7 @@ public class Lista<Item> implements Iterable<Item> {
      * @return Número de elementos en la lista.
      */
     public int tamano() {
-        return cantidad;
+        return count;
     }
     
      /**
@@ -165,7 +165,7 @@ public class Lista<Item> implements Iterable<Item> {
      * @return Capacidad actual del arreglo interno
      */
     public int capacidadActual() {
-        return capacidad;
+        return tamano;
     }
 
     /**
@@ -173,10 +173,10 @@ public class Lista<Item> implements Iterable<Item> {
      */
     public void mostrarContenido() {
         System.out.println("\nContenido de la lista:");
-        for (int i = 0; i < cantidad; i++) {
-            System.out.println((i + 1) + ". " + elementos[i]);
+        for (int i = 0; i < count; i++) {
+            System.out.println((i + 1) + ". " + a[i]);
         }
-        if (cantidad == 0) {
+        if (count == 0) {
             System.out.println("La lista esta vacia.");
         }
     }
@@ -194,7 +194,7 @@ public class Lista<Item> implements Iterable<Item> {
 
         @Override
         public boolean hasNext() {
-            return posicionActual < cantidad;
+            return posicionActual < count;
         }
 
         @Override
@@ -203,7 +203,7 @@ public class Lista<Item> implements Iterable<Item> {
                 System.out.println("Advertencia: No hay más elementos.");
                 return null;
             }
-            return elementos[posicionActual++];
+            return a[posicionActual++];
         }
     }
 }
