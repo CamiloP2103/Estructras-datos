@@ -49,7 +49,7 @@ public class Cola<Item> implements Iterable<Item> {
     private void redimensionar(int nuevaCapacidad) {
         Item[] temporal = (Item[]) new Object[nuevaCapacidad];
         
-        iendo el orden FIFO
+        
         for (int i = 0; i < count; i++) {
             temporal[i] = a[(ini + i) % tamano];
         }
@@ -57,7 +57,7 @@ public class Cola<Item> implements Iterable<Item> {
         a = temporal;
         tamano = nuevaCapacidad;
         ini = 0;
-        fin = count;
+        fin = count-1;
     }
 
     /**
@@ -88,7 +88,7 @@ public class Cola<Item> implements Iterable<Item> {
         }
         
         Item elemento = a[ini];
-        a[ini] = null; moria
+        a[ini] = null;
         ini = (ini + 1) % tamano; 
         count--;
         
@@ -166,7 +166,7 @@ public class Cola<Item> implements Iterable<Item> {
             if (!hasNext()) {
                 System.out.println("No hay mas elementos en la cola.");
             }
-             (considerando la estructura circular)
+            
             Item elemento = a[(ini + i) % tamano];
             i++;
             return elemento;
