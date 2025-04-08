@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Estructuras;
 
 /**
@@ -26,11 +22,11 @@ import java.util.Iterator;
  * @author Rodrigo Bueno
  */
 public class Cola<Item> implements Iterable<Item> {
-    private Item[] a;   // Arreglo para almacenar los elementos
-    private int ini;         // Índice del primer elemento
-    private int fin;      // Índice del último elemento
-    private int count;       // Número de elementos en la cola
-    private int tamano;      // Capacidad actual del arreglo
+    private Item[] a;    
+    private int ini;         
+    private int fin;      
+    private int count;       
+    private int tamano;      
 
     /**
      * Constructor que inicializa la cola con una capacidad dada.
@@ -53,7 +49,7 @@ public class Cola<Item> implements Iterable<Item> {
     private void redimensionar(int nuevaCapacidad) {
         Item[] temporal = (Item[]) new Object[nuevaCapacidad];
         
-        // Copia los elementos manteniendo el orden FIFO
+        iendo el orden FIFO
         for (int i = 0; i < count; i++) {
             temporal[i] = a[(ini + i) % tamano];
         }
@@ -72,10 +68,10 @@ public class Cola<Item> implements Iterable<Item> {
      */
     public void encolar(Item elemento) {
         if (count == tamano) {
-            redimensionar(2 * tamano); // Duplica la capacidad si es necesario
+            redimensionar(2 * tamano);  
         }
         
-        fin = (fin + 1) % tamano; // Avanza finalCola circularmente
+        fin = (fin + 1) % tamano; 
         a[fin] = elemento;
         count++;
     }
@@ -92,11 +88,11 @@ public class Cola<Item> implements Iterable<Item> {
         }
         
         Item elemento = a[ini];
-        a[ini] = null; // Evita el desperdicio de memoria
-        ini = (ini + 1) % tamano; // Avanza frente circularmente
+        a[ini] = null; moria
+        ini = (ini + 1) % tamano; 
         count--;
         
-        // Reduce el tamaño a la mitad si es muy grande y contiene pocos elementos
+        
         if (count > 0 && count == tamano / 4) {
             redimensionar(tamano / 2);
         }
@@ -158,7 +154,7 @@ public class Cola<Item> implements Iterable<Item> {
      * Clase interna que implementa Iterador para recorrer la cola.
      */
     private class IteradorCola implements Iterator<Item> {
-        private int i = 0; // Comenzamos en el frente de la cola
+        private int i = 0;  
 
         @Override
         public boolean hasNext() {
@@ -170,7 +166,7 @@ public class Cola<Item> implements Iterable<Item> {
             if (!hasNext()) {
                 System.out.println("No hay mas elementos en la cola.");
             }
-            // Obtiene el elemento actual (considerando la estructura circular)
+             (considerando la estructura circular)
             Item elemento = a[(ini + i) % tamano];
             i++;
             return elemento;
